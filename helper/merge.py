@@ -9,12 +9,16 @@
 
 import sys
 import os
+import chardet
+import codecs
 
 DICT_DIRECTORY = '../opencc/dictionary'
 
 MER_INPUTS = [
-    'TWPhrasesIT.txt',
+    # 'TWPhrasesIT.txt',
     'TWPhrasesName.txt',
+    'TWPhrasesGameName.txt',
+    'TWPhrasesGame.txt',
     'TWPhrasesOther.txt'
 ]
 
@@ -29,21 +33,27 @@ def merge(mer_inputs=MER_INPUTS, mer_output=MER_OUTPUT):
     :return: None
     """
     dirname = os.path.dirname(__file__)
+
     output_file = os.path.join(dirname, DICT_DIRECTORY, mer_output)
     lines = []
     for in_file in MER_INPUTS:
         input_file = os.path.join(dirname, DICT_DIRECTORY, in_file)
-        with open(input_file, encoding='utf-8') as f:
+        with codecs.open(input_file, encoding='utf-8') as f:
             for line in f:
                 lines.append(line)
 
-    with open(output_file, 'w', encoding='utf-8') as f:
+    with codecs.open(output_file, 'w', encoding='utf-8') as f:
         for line in lines:
             f.write(line)
 
+    testdir = "C:\\Python27\\Lib\\site-packages\\opencc_python_reimplemented-0.1.4-py2.7.egg\\opencc\\dictionary"
+    output_file2 = os.path.join(testdir, mer_output)
+    with codecs.open(output_file2, 'w', encoding='utf-8') as f:
+        for line in lines:
+            f.write(line)
 
 if __name__ == '__main__':
-    if sys.version_info[0] < 3:
-        print('Requires Python3 to run')
-        sys.exit(0)
+    # if sys.version_info[0] < 3:
+    #     print('Requires Python3 to run')
+    #     sys.exit(0)
     merge()
